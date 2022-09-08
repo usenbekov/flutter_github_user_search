@@ -27,11 +27,11 @@ void main() {
     'should get data from repo',
     () async {
       when(mockUserRepo.searchUser(keyword))
-          .thenAnswer((_) async => const Right(user));
+          .thenAnswer((_) async => const Right([user]));
 
       final res = await usecase(const Params(value: keyword));
 
-      expect(res, const Right(user));
+      expect(res, const Right([user]));
       verify(mockUserRepo.searchUser(keyword));
       verifyNoMoreInteractions(mockUserRepo);
     },
