@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_github_user_search/core/error/exceptions.dart';
 import 'package:flutter_github_user_search/features/user/data/datasources/user_remote_data_source.dart';
 import 'package:flutter_github_user_search/features/user/data/models/user_model.dart';
@@ -12,7 +13,10 @@ import 'user_remote_data_source_test.mocks.dart';
 
 @GenerateMocks([],
     customMocks: [MockSpec<http.Client>(returnNullOnMissingStub: true)])
-void main() {
+void main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
+
   late MockClient mockHttpClient;
   late UserRemoteDataSourceImpl dataSource;
 
