@@ -16,6 +16,7 @@ dependencies:
 
   equatable: ^2.0.5
   dartz: ^0.10.1
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
@@ -23,6 +24,7 @@ dev_dependencies:
 
   flutter_lints: ^1.0.0
   mockito: ^5.0.0
+  build_runner: ^2.2.0
 
 flutter:
   uses-material-design: true
