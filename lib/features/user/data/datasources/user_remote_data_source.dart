@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_github_user_search/core/error/exceptions.dart';
 import 'package:flutter_github_user_search/features/user/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -15,7 +16,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   Uri createUri(String? url) => Uri.parse(url ?? '');
   Uri createUriForSearch(String? keyword) =>
-      createUri('https://api.github.com/search/users?q=$keyword');
+      createUri('${dotenv.env['GITHUB_ENDPOINT']}/search/users?q=$keyword');
 
   @override
   Future<List<UserModel>>? searchUser(String keyword) async {
@@ -32,7 +33,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<Map> _request(Uri uri) async {
     final response = await client.get(
       uri,
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${dotenv.env['GITHUB_TOKEN']}',
+      },
     );
     if (response.statusCode == 200) {
       return json.decode(response.body);
